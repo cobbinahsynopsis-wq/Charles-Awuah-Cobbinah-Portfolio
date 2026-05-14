@@ -1,0 +1,334 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-hazard: var(--hazard);
+  --color-blueprint: var(--blueprint);
+  --color-cyan-bp: var(--cyan-bp);
+  --color-signal: var(--signal);
+  --color-pld: var(--pld);
+  --color-violet-bp: var(--violet-bp);
+  --color-muted-ink: var(--muted-ink);
+
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Dark blueprint engineering palette (oklch) */
+  --ink: oklch(0.15 0.025 250);            /* deepest surface */
+  --paper: oklch(0.96 0.005 250);          /* light text on dark */
+  --paper-2: oklch(0.20 0.030 252);        /* card surface */
+  --line: oklch(0.32 0.040 250);           /* primary borders */
+  --line-soft: oklch(0.26 0.030 250);      /* faint borders */
+  --muted-ink: oklch(0.68 0.025 250);      /* muted body text */
+
+  --hazard: oklch(0.68 0.20 25);           /* hazard red/coral */
+  --blueprint: oklch(0.70 0.16 245);       /* electric blue */
+  --cyan-bp: oklch(0.82 0.14 200);         /* signal cyan */
+  --signal: oklch(0.82 0.16 85);           /* warm amber */
+  --pld: oklch(0.78 0.16 165);             /* PLd teal-green */
+  --violet-bp: oklch(0.72 0.18 295);       /* signal violet */
+
+  --grid: oklch(0.70 0.16 245 / 0.07);
+  --grid-2: oklch(0.82 0.14 200 / 0.05);
+
+  /* Gradients & glows */
+  --gradient-hero: radial-gradient(
+      ellipse 80% 60% at 20% 0%,
+      oklch(0.30 0.14 270 / 0.55),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 90% 30%,
+      oklch(0.32 0.12 220 / 0.45),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 50% 100%,
+      oklch(0.30 0.14 25 / 0.30),
+      transparent 70%
+    );
+  --gradient-accent: linear-gradient(135deg, var(--blueprint), var(--violet-bp));
+  --gradient-warm: linear-gradient(135deg, var(--hazard), var(--signal));
+  --gradient-cool: linear-gradient(135deg, var(--cyan-bp), var(--blueprint));
+  --gradient-text: linear-gradient(120deg, var(--paper) 0%, var(--cyan-bp) 50%, var(--violet-bp) 100%);
+
+  --shadow-glow: 0 0 0 1px oklch(0.70 0.16 245 / 0.20),
+    0 20px 60px -20px oklch(0.70 0.16 245 / 0.35);
+  --shadow-card: 0 1px 0 0 oklch(1 0 0 / 0.04) inset,
+    0 20px 40px -24px oklch(0 0 0 / 0.6);
+
+  /* Map shadcn tokens onto blueprint palette */
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --card: var(--paper-2);
+  --card-foreground: var(--paper);
+  --popover: var(--paper-2);
+  --popover-foreground: var(--paper);
+  --primary: var(--blueprint);
+  --primary-foreground: var(--ink);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--paper);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--cyan-bp);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: var(--paper);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--cyan-bp);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 100% 60% at 50% -10%, oklch(0.28 0.12 270 / 0.45), transparent 60%),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-2) 1px, transparent 1px);
+    background-size: 100% 100%, 44px 44px, 44px 44px;
+    background-attachment: fixed, fixed, fixed;
+  }
+  ::selection { background: var(--cyan-bp); color: var(--ink); }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
+  .font-mono { font-family: var(--font-mono); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--gradient-cool);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted-ink);
+  }
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-warm {
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .surface-card {
+    background:
+      linear-gradient(180deg, oklch(1 0 0 / 0.025), transparent 40%),
+      var(--paper-2);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .surface-glass {
+    background: oklch(0.18 0.030 252 / 0.55);
+    border: 1px solid oklch(1 0 0 / 0.06);
+    backdrop-filter: blur(12px);
+  }
+  .glow-ring {
+    box-shadow: 0 0 0 1px oklch(0.70 0.16 245 / 0.30),
+      0 18px 50px -18px oklch(0.70 0.16 245 / 0.45);
+  }
+  .btn-primary {
+    background: var(--gradient-cool);
+    color: var(--ink);
+    border: 1px solid transparent;
+    padding: 0.85rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 12px 30px -10px oklch(0.70 0.16 245 / 0.55);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--line);
+    padding: 0.85rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .btn-ghost:hover {
+    border-color: var(--cyan-bp);
+    color: var(--cyan-bp);
+    background: oklch(0.82 0.14 200 / 0.06);
+  }
+}
+
+/* corner blueprint marks */
+.corner { position: absolute; width: 18px; height: 18px; border: 1px solid var(--cyan-bp); opacity: 0.7; }
+.corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.corner.br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* schematic ascii block */
+.schematic {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+  padding: 28px;
+  border: 1px dashed oklch(0.70 0.16 245 / 0.45);
+  background:
+    radial-gradient(ellipse at top left, oklch(0.70 0.16 245 / 0.10), transparent 60%),
+    var(--paper-2);
+  color: var(--cyan-bp);
+  border-radius: 6px;
+}
+
+/* fade up entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade { animation: fadeUp 0.7s ease-out backwards; }
+.fade.d1 { animation-delay: 0.05s; }
+.fade.d2 { animation-delay: 0.18s; }
+.fade.d3 { animation-delay: 0.32s; }
+.fade.d4 { animation-delay: 0.46s; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+.pulse-dot { animation: pulseDot 2.2s ease-in-out infinite; }
+
+/* Radar sweep — cinematic hero overlay */
+@keyframes radarSpin { to { transform: rotate(360deg); } }
+.radar-sweep {
+  pointer-events: none;
+  position: absolute;
+  top: 8%;
+  right: -8%;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  border: 1px solid oklch(0.82 0.14 200 / 0.18);
+  box-shadow:
+    inset 0 0 0 1px oklch(0.82 0.14 200 / 0.06),
+    inset 0 0 80px oklch(0.70 0.16 245 / 0.12);
+  opacity: 0.7;
+  mask-image: radial-gradient(circle, black 60%, transparent 72%);
+}
+.radar-sweep::before,
+.radar-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+.radar-sweep::before {
+  background:
+    repeating-radial-gradient(circle, transparent 0 48px, oklch(0.82 0.14 200 / 0.10) 49px 50px);
+}
+.radar-sweep::after {
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.82 0.14 200 / 0.45) 0deg,
+    oklch(0.82 0.14 200 / 0) 60deg,
+    transparent 360deg
+  );
+  animation: radarSpin 6s linear infinite;
+  filter: blur(1px);
+}
+@media (max-width: 768px) {
+  .radar-sweep { width: 340px; height: 340px; right: -25%; top: 12%; }
+}
+
+/* Telemetry grid scan lines */
+@keyframes telemetryScan {
+  0% { background-position: 0 -200px; }
+  100% { background-position: 0 200px; }
+}
+.telemetry-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(oklch(0.82 0.14 200 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.82 0.14 200 / 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 30% 50%, black, transparent 70%);
+  opacity: 0.55;
+}
+.telemetry-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    oklch(0.82 0.14 200 / 0.12) 50%,
+    transparent 100%
+  );
+  background-size: 100% 200px;
+  animation: telemetryScan 7s linear infinite;
+}
