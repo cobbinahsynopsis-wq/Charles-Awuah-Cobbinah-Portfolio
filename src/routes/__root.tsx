@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
@@ -52,7 +53,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Retry
           </button>
-          <a
+          
             href="/"
             className="border border-ink px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink hover:bg-paper-2"
           >
@@ -119,6 +120,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <SiteFooter />
+      <Analytics />
     </QueryClientProvider>
   );
 }
